@@ -14,3 +14,6 @@ yarn-error.log*
 Client/node_modules/
 Server/node_modules/
 Server/*.env
+Server/.env
+./Server/.env
+
