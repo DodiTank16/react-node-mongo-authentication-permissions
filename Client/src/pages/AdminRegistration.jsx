@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "../assets/css/registration.css";
 
 const AdminRegistration = () => {
   const [fName, setFname] = useState("");
