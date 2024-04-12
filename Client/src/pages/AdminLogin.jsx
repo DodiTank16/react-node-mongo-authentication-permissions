@@ -39,7 +39,7 @@ const AdminLogin = () => {
               setPassword(e.target.value);
             }}
           />
-          <div className="d-flex end-to-end">
+          <div className="flex justify-between w-full">
             <button className="button">Forgot Password?</button>
             <button type="submit" className="login-button">
               Login

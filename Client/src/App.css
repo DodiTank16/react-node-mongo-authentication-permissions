@@ -1,4 +1,6 @@
-@import url("https://fonts.googleapis.com/css?family=Raleway:400,700");
+@tailwind base;
+@tailwind utilities;
+
 @import url("./assets/css/index.css");
 
 body {

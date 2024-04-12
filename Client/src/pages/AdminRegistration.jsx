@@ -1,34 +1,9 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 
 const AdminRegistration = () => {
-  const [fName, setFname] = useState("");
-  const [lName, setLname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const payload = {
-      fName,
-      lName,
-      email,
-      password,
-    };
-    axios
-      .post("http://localhost:8082/adminRegister", payload)
-      .then(function (response) {
-        // handle success
-        console.log("response", response);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
-  };
   return (
     <>
-      <div className="page-wrapper bg-gra-03 p-t-45 p-b-50">
+      {/* <div className="page-wrapper bg-gra-03 p-t-45 p-b-50">
         <div className="wrapper wrapper--w790">
           <div className="card card-5">
             <div className="card-heading">
@@ -109,7 +84,7 @@ const AdminRegistration = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
