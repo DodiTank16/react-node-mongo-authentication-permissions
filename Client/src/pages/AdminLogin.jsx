@@ -1,8 +1,12 @@
 import React, { useState } from "react";
-import "../assets/scss/adminLogin.scss";
-import axios from "axios";
+import { useDispatch } from "react-redux";
+import { loginAction } from "../redux/auth/action";
+import { useNavigate } from "react-router-dom";
 
 const AdminLogin = () => {
+  const dispatch = useDispatch();
+  const naviagte = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,16 +16,7 @@ const AdminLogin = () => {
       email,
       password,
     };
-    axios
-      .post("http://localhost:8082/login", payload)
-      .then(function (response) {
-        // handle success
-        console.log("response", response);
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
+    dispatch(loginAction(payload, naviagte));
   };
   return (
     <div class="container">
@@ -44,9 +39,12 @@ const AdminLogin = () => {
               setPassword(e.target.value);
             }}
           />
-          <button type="submit" className="login-button">
-            Login
-          </button>
+          <div className="flex justify-between w-full">
+            <button className="button">Forgot Password?</button>
+            <button type="submit" className="login-button">
+              Login
+            </button>
+          </div>
         </div>
       </form>
     </div>
