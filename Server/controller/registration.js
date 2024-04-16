@@ -25,7 +25,7 @@ export const registration = async (req, res) => {
       role: email === "tankdodi@gmail.com" ? "ADMIN" : "CUSTOMER",
     });
 
-    const message = `${process.env.BASE_URL}/user/verify/${user._id}`;
+    const message = `<body><h1>${process.env.BASE_URL}/user/verify/${user._id}</h1></body>`;
     await emailVerification({
       email,
       subject: "Verify Account",

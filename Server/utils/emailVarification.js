@@ -1,7 +1,6 @@
 import nodemailer from "nodemailer";
 
 export const emailVerification = async ({ email, subject, text }) => {
-  console.log("text >", text);
   const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT || 587,
