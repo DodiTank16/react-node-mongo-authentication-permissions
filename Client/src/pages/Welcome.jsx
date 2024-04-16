@@ -1,26 +1,51 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import axios from "axios";
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import * as Yup from "yup";
+import FormProvider from "../components/FormProvider";
 import Textfield from "../components/Textfield";
+import useUserToken from "../hooks/useTitle";
+
+const initialValues = {
+  fName: "",
+  lName: "",
+  phoneNumber: "",
+  email: "",
+  password: "",
+};
+
+const validationSchema = Yup.object().shape({
+  fName: Yup.string().required("Name is required"),
+  lName: Yup.string().required("Name is required"),
+  phoneNumber: Yup.string().required("Confirm Password is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string()
+    .min(6, "Password must be at least 6 characters")
+    .required("Password is required"),
+});
 
 const Welcome = () => {
-  const [fName, setFname] = useState("");
-  const [lName, setLname] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const [darkMode, setDarkMode] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const payload = {
-      fName,
-      lName,
-      email,
-      password,
-    };
+  const methods = useForm({
+    resolver: yupResolver(validationSchema),
+    initialValues,
+  });
+
+  const {
+    handleSubmit,
+    handleChange,
+    setValue,
+    watch,
+    formState: { errors },
+  } = methods;
+
+  const onSubmit = (values) => {
+    console.log("VALUES :", values);
     axios
-      .post("http://localhost:8082/adminRegister", payload)
+      .post("http://localhost:8082/adminRegister", values)
       .then(function (response) {
         // handle success
         console.log("response", response);
@@ -30,10 +55,11 @@ const Welcome = () => {
         console.log(error);
       });
   };
+
   return (
-    <form action="POST" onSubmit={handleSubmit}>
-      <div className="flex flex-col justify-center items-center w-full h-[100vh] bg-[#282D2D] px-5">
-        <div className=" flex flex-col items-end justify-start  overflow-hidden mb-2 xl:max-w-3xl w-full">
+    <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
+      <div className="flex flex-col justify-center items-center w-full min-h-screen  bg-[#282D2D] px-5 py-5">
+        <div className=" flex flex-col items-end justify-start overflow-hidden mb-2 xl:max-w-3xl w-full">
           <div className="flex">
             <h3 className="text-white">Dark Mode : &nbsp;</h3>
             <label class="inline-flex relative items-center mr-5 cursor-pointer">
@@ -66,6 +92,7 @@ const Welcome = () => {
             <div className="mx-auto max-w-xs sm:max-w-md md:max-w-lg flex flex-col gap-4">
               <div className="flex flex-col sm:flex-row gap-3">
                 <Textfield
+                  name="fname"
                   className={`w-full px-5 py-3 rounded-lg font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none  focus:border-2  focus:outline ${
                     darkMode
                       ? "bg-[#302E30] text-white focus:border-white"
@@ -73,7 +100,8 @@ const Welcome = () => {
                   }`}
                   placeholder="Your first name"
                 />
-                <input
+                <Textfield
+                  name="lName"
                   className={`w-full px-5 py-3 rounded-lg  font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2  focus:outline ${
                     darkMode
                       ? "bg-[#302E30] text-white focus:border-white"
@@ -83,7 +111,8 @@ const Welcome = () => {
                   placeholder="Your last name"
                 />
               </div>
-              <input
+              <Textfield
+                name="email"
                 className={`w-full px-5 py-3 rounded-lg  font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2  focus:outline ${
                   darkMode
                     ? "bg-[#302E30] text-white focus:border-white"
@@ -92,7 +121,8 @@ const Welcome = () => {
                 type="email"
                 placeholder="Enter your email"
               />
-              <input
+              <Textfield
+                name="phoneNumber"
                 className={`w-full px-5 py-3 rounded-lg  font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2  focus:outline ${
                   darkMode
                     ? "bg-[#302E30] text-white focus:border-white"
@@ -101,7 +131,8 @@ const Welcome = () => {
                 type="tel"
                 placeholder="Enter your phone"
               />
-              <input
+              <Textfield
+                name="password"
                 className={`w-full px-5 py-3 rounded-lg  font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2  focus:outline ${
                   darkMode
                     ? "bg-[#302E30] text-white focus:border-white"
@@ -134,7 +165,7 @@ const Welcome = () => {
           </div>
         </div>
       </div>
-    </form>
+    </FormProvider>
   );
 };
 export default Welcome;

@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { loginAction } from "../redux/auth/action";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-const AdminLogin = () => {
+const Login = () => {
   const dispatch = useDispatch();
   const naviagte = useNavigate();
 
@@ -18,14 +18,17 @@ const AdminLogin = () => {
     };
     dispatch(loginAction(payload, naviagte));
   };
+
   return (
-    <div class="container">
-      <form action="POST" onSubmit={handleSubmit}>
-        <div class="top"></div>
-        <div class="bottom"></div>
-        <div class="center">
+    <div className="container">
+      <form action="POST" onSubmit={handleSubmit} autoComplete="false">
+        <div className="top"></div>
+        <div className="bottom"></div>
+        <div className="center">
           <h2>Please Sign In</h2>
           <input
+            className="focus:border-purple-700"
+            autoComplete="off"
             type="email"
             name="email"
             onChange={(e) => {
@@ -40,10 +43,20 @@ const AdminLogin = () => {
             }}
           />
           <div className="flex justify-between w-full">
-            <button className="button">Forgot Password?</button>
+            <button type="button" className="button">
+              Forgot Password?
+            </button>
             <button type="submit" className="login-button">
               Login
             </button>
+          </div>
+          <div className="mt-2">
+            Don't have an account?{" "}
+            <Link
+              to="/registration"
+              className="font-semibold text-purple-700 hover:underline underline-offset-2">
+              Register
+            </Link>
           </div>
         </div>
       </form>
@@ -51,4 +64,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default Login;

@@ -26,15 +26,7 @@ export const login = async (req, res) => {
       throw new ApiError(400, "Password is Incorrect");
     }
 
-    // const user = {
-    //   id: existingUser.id,
-    //   email: existingUser.email,
-    //   name: existingUser.name,
-    //   role: existingUser.role,
-    //   dob: existingUser.dob,
-    //   createdAt: existingUser.createdAt,
-    // };
-    const user = await User.findOne({ email }).select("-password");
+    const user = await User.findOne({ email }).select("-password -verified");
 
     const token = jwt.sign({ user }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRE,

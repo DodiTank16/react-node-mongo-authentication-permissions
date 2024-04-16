@@ -4,6 +4,7 @@ import express from "express";
 
 import userRoutes from "./routes/registration.js";
 
+console.clear();
 const App = express();
 App.use(cors());
 App.use(cookieParser());
