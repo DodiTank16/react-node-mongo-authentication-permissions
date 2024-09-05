@@ -14,7 +14,7 @@ export const login = async (req, res) => {
     ) {
       throw new ApiError(400, "All Fields are required");
     }
-    const existingUser = await User.findOne({ email });
+    const existingUser = await User.findOne({ where: { email } });
 
     if (!existingUser) {
       throw new ApiError(400, "User is Not Registered Please Signup.");
@@ -26,9 +26,15 @@ export const login = async (req, res) => {
       throw new ApiError(400, "Password is Incorrect");
     }
 
-    const user = await User.findOne({ email }).select("-password -verified");
+    const user = await User.findOne({ where: { email } });
+    const userObj = {
+      fname: user.fname,
+      lname: user.lname,
+      email: user.email,
+      role: user.role,
+    };
 
-    const token = jwt.sign({ user }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ userObj }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRE,
     });
 
@@ -40,7 +46,13 @@ export const login = async (req, res) => {
     res
       .status(200)
       .cookie("token", token, options)
-      .json(new ApiResponse(200, { user, token }, "User Login Successfully"));
+      .json(
+        new ApiResponse(
+          200,
+          { user: userObj, token },
+          "User Login Successfully"
+        )
+      );
   } catch (error) {
     console.error(error);
 

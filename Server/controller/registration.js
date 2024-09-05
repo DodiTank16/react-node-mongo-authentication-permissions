@@ -1,3 +1,4 @@
+import { where } from "sequelize";
 import User from "../module/user.js";
 import ApiError from "../utils/ApiError.js";
 import ApiResponse from "../utils/ApiResponse.js";
@@ -11,7 +12,7 @@ export const registrationAdmin = async (req, res) => {
       throw new ApiError(400, "Please fill in all required fields.");
     }
 
-    let user = await User.findOne({ email: email });
+    let user = await User.findOne({ where: { email: email } });
     if (user)
       return res
         .status(400)
@@ -25,14 +26,13 @@ export const registrationAdmin = async (req, res) => {
       role: "admin",
     });
 
-    const message = `<body><h1>${process.env.BASE_URL}/user/verify/${user._id}</h1></body>`;
+    await user.save();
+    const message = `<body><a href=${process.env.BASE_URL}/user/verify/${user.id} target="_blank">Click to verify</a></body>`;
     await emailVerification({
       email,
       subject: "Verify Account",
       text: message,
     });
-
-    await user.save();
 
     res.status(201).json(new ApiResponse(200, null, "User Registered Success"));
   } catch (error) {
@@ -57,7 +57,7 @@ export const registrationCustomer = async (req, res) => {
       throw new ApiError(400, "Please fill in all required fields.");
     }
 
-    let user = await User.find({ email: email });
+    let user = await User.findOne({ where: { email: email } });
     if (user)
       return res
         .status(400)
@@ -71,7 +71,7 @@ export const registrationCustomer = async (req, res) => {
       role: "customer",
     });
 
-    const message = `<body><h1>${process.env.BASE_URL}/user/verify/${user._id}</h1></body>`;
+    const message = `<body><a href=${process.env.BASE_URL}/user/verify/${user.id}>Click to verify</a></body>`;
     await emailVerification({
       email,
       subject: "Verify Account",
