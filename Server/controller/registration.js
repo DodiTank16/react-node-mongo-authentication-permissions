@@ -27,7 +27,19 @@ export const registrationAdmin = async (req, res) => {
     });
 
     await user.save();
-    const message = `<body><a href=${process.env.BASE_URL}/user/verify/${user.id} target="_blank">Click to verify</a></body>`;
+    const message = `
+    <p>Hello, verify your email address by clicking on this</p><br>
+    <a href="${process.env.BASE_URL}/user/verify/${user.id}" target="_blank" style="
+      display: inline-block;
+      cursor: pointer;
+      padding: 10px 20px;
+      font-size: 16px;
+      color: white;
+      background-color: #007BFF;
+      text-decoration: none;
+      border-radius: 5px;
+    ">Click here to verify</a>`;
+
     await emailVerification({
       email,
       subject: "Verify Account",
