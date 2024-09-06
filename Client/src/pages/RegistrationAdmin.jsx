@@ -102,16 +102,6 @@ const RegistrationAdmin = () => {
                   />
                 </div>
                 <Textfield
-                  name="phoneNumber"
-                  className={`w-full px-5 py-3 rounded-lg  font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2  focus:outline focus:border-purple-700 ${
-                    darkMode
-                      ? "bg-[#302E30] text-white"
-                      : "bg-gray-100 text-black"
-                  }`}
-                  type="tel"
-                  placeholder="Enter your phone"
-                />
-                <Textfield
                   name="email"
                   className={`w-full px-5 py-3 rounded-lg  font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2  focus:outline focus:border-purple-700 ${
                     darkMode
