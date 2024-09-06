@@ -1,0 +1,10 @@
+#CONNECTION
+CONNECTION_URL = "mongodb connection url"
+
+
+# token
+JWT_SECRET = 'JWT Token Secret key'
+JWT_EXPIRE = "JWT Token Expire Time"
+
+#PORT
+PORT= "PORT NUMBER"

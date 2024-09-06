@@ -30,7 +30,7 @@ if (env === environment.STAGING) {
 }
 
 if (env === environment.DEVELOPMENT) {
-  API_URL = `http://localhost:8082/`; //local
+  API_URL = `http://localhost:3003/`; //local
 }
 
 export { API_URL, defaultOptions, MEDIA_URL, UI_URL };

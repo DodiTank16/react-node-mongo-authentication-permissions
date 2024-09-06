@@ -1,32 +1,45 @@
-import mongoose from "mongoose";
+import Sequelize from "sequelize";
+import database from "../config/database.js";
 
-const userSchema = mongoose.Schema({
-  fName: {
-    type: String,
-    required: true,
+const User = database.define(
+  "user",
+  {
+    id: {
+      type: Sequelize.INTEGER(),
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    fName: {
+      type: Sequelize.STRING(100),
+    },
+    lName: {
+      type: Sequelize.STRING(100),
+    },
+    email: {
+      type: Sequelize.STRING(100),
+      unique: true,
+    },
+    isVerifiedEmail: {
+      type: Sequelize.BOOLEAN(),
+      defaultValue: false,
+    },
+    password: {
+      type: Sequelize.STRING(100),
+    },
+    role: {
+      type: Sequelize.ENUM("admin", "customer"),
+      defaultValue: "customer",
+    },
   },
-  lName: {
-    type: String,
-    required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  role: {
-    type: String,
-    required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: new Date(),
-  },
-});
-
-var User = mongoose.model("User", userSchema);
+  {
+    indexes: [
+      {
+        unique: true,
+        fields: ["email"],
+      },
+    ],
+    freezeTableName: true,
+  }
+);
 
 export default User;

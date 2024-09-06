@@ -14,7 +14,7 @@ const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: [],
+  whitelist: ["Auth"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
