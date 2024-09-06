@@ -1,10 +1,21 @@
-import { loginApi, registrationApi } from "../../services/AuthServices";
+import {
+  loginApi,
+  logoutApi,
+  registrationApi,
+} from "../../services/AuthServices";
 import {
   registration,
   registrationFailure,
   registrationSuccess,
 } from "./adminRegistrationSlice";
-import { authData, authDataFailure, authDataSuccess } from "./authSlice";
+import {
+  authData,
+  authDataFailure,
+  authDataSuccess,
+  logout,
+  logoutFailure,
+  logoutSuccess,
+} from "./authSlice";
 
 export const loginAction = (payload, naviagte) => {
   return function (dispatch) {
@@ -22,6 +33,7 @@ export const loginAction = (payload, naviagte) => {
       })
       .catch((error) => {
         console.log("error", error);
+        alert(error.response.data.message);
         dispatch(authDataFailure(error));
       });
   };
@@ -40,6 +52,22 @@ export const registrationAction = (payload, type, naviagte) => {
         console.log("error", error);
         alert("Registration Failed, Please try again later.");
         dispatch(registrationFailure(error));
+      });
+  };
+};
+
+export const logoutAction = (payload, naviagte) => {
+  return function (dispatch) {
+    dispatch(logout());
+    logoutApi(payload)
+      .then((res) => {
+        dispatch(logoutSuccess(res?.data));
+        localStorage.removeItem("token");
+      })
+      .catch((error) => {
+        console.log("error", error);
+        alert(error.response.data.message);
+        dispatch(logoutFailure(error));
       });
   };
 };

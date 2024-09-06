@@ -7,6 +7,7 @@ import AuthGuard from "./routing/AuthGuard";
 import PublicRoutes from "./routing/PublicRoutes";
 import RegistrationAdmin from "./pages/RegistrationAdmin";
 import RegistrationCustomer from "./pages/RegistrationCustomer";
+import VerifyUser from "./pages/VerifyUser";
 
 function App() {
   const ROLES = {
@@ -38,6 +39,11 @@ function App() {
       path: "/customer/registration",
       element: <RegistrationCustomer />,
       title: "Register",
+    },
+    {
+      path: "/user/verify",
+      element: <VerifyUser />,
+      title: "UserVerification",
     },
   ];
 
