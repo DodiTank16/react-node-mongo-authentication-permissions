@@ -5,6 +5,6 @@ export const loginApi = (data, options = null) => {
   return ApiService.post(API_URL + "login", data);
 };
 
-export const registrationApi = (data, options = null) => {
-  return ApiService.post(API_URL + "registration", data);
+export const registrationApi = (data, type, options = null) => {
+  return ApiService.post(API_URL + `${type}/registration`, data);
 };

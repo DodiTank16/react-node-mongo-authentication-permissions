@@ -1,16 +1,17 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Login from "./pages/Login";
-import Registration from "./pages/Registration";
+import Registration from "./pages/RegistrationAdmin";
 import Welcome from "./pages/Welcome";
 import AuthGuard from "./routing/AuthGuard";
 import PublicRoutes from "./routing/PublicRoutes";
+import RegistrationAdmin from "./pages/RegistrationAdmin";
+import RegistrationCustomer from "./pages/RegistrationCustomer";
 
 function App() {
-  console.clear();
   const ROLES = {
-    ADMIN: "ADMIN",
-    CLIENT: "CLIENT",
+    ADMIN: "admin",
+    CLIENT: "customer",
   };
 
   const routes = [
@@ -29,8 +30,13 @@ function App() {
       title: "Login",
     },
     {
-      path: "/registration",
-      element: <Registration />,
+      path: "/admin/registration",
+      element: <RegistrationAdmin />,
+      title: "Register",
+    },
+    {
+      path: "/customer/registration",
+      element: <RegistrationCustomer />,
       title: "Register",
     },
   ];

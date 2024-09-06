@@ -26,7 +26,7 @@ const validationSchema = Yup.object().shape({
     .required("Password is required"),
 });
 
-const Registration = () => {
+const RegistrationCustomer = () => {
   const [darkMode, setDarkMode] = useState(false);
   const dispatch = useDispatch();
   const naviagte = useNavigate();
@@ -42,7 +42,7 @@ const Registration = () => {
   } = methods;
 
   const onSubmit = (values) => {
-    dispatch(registrationAction(values, naviagte));
+    dispatch(registrationAction(values, "customer", naviagte));
   };
 
   return (
@@ -76,7 +76,7 @@ const Registration = () => {
               className={`text-center text-xl sm:text-3xl font-semibold ${
                 darkMode ? "text-white" : "text-black"
               }`}>
-              Register for a free account
+              Register for customer
             </h1>
             <div className="w-full mt-8">
               <div className="mx-auto max-w-xs sm:max-w-md md:max-w-lg flex flex-col gap-4">
@@ -163,4 +163,4 @@ const Registration = () => {
   );
 };
 
-export default Registration;
+export default RegistrationCustomer;

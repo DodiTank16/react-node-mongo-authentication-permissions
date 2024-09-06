@@ -13,8 +13,11 @@ export const loginAction = (payload, naviagte) => {
       .then((res) => {
         dispatch(authDataSuccess(res?.data));
         localStorage.setItem("token", res?.data?.token);
-        if (res?.data?.user?.role == "ADMIN") {
+
+        if (res?.data?.user?.role === "admin") {
           naviagte("/");
+        } else {
+          alert("You are not allowed to login from here");
         }
       })
       .catch((error) => {
@@ -24,16 +27,18 @@ export const loginAction = (payload, naviagte) => {
   };
 };
 
-export const registrationAction = (payload, naviagte) => {
+export const registrationAction = (payload, type, naviagte) => {
   return function (dispatch) {
     dispatch(registration());
-    registrationApi(payload)
+    registrationApi(payload, type)
       .then((res) => {
         dispatch(registrationSuccess(res?.data));
+        alert("Registration Success..!!");
         naviagte("/login");
       })
       .catch((error) => {
         console.log("error", error);
+        alert("Registration Failed, Please try again later.");
         dispatch(registrationFailure(error));
       });
   };
