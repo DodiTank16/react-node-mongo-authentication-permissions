@@ -19,7 +19,6 @@ const initialValues = {
 const validationSchema = Yup.object().shape({
   fName: Yup.string().required("Name is required"),
   lName: Yup.string().required("Name is required"),
-  phoneNumber: Yup.string().required("Confirm Password is required"),
   email: Yup.string().email("Invalid email").required("Email is required"),
   password: Yup.string()
     .min(6, "Password must be at least 6 characters")
@@ -101,16 +100,6 @@ const RegistrationCustomer = () => {
                     placeholder="Your last name"
                   />
                 </div>
-                <Textfield
-                  name="phoneNumber"
-                  className={`w-full px-5 py-3 rounded-lg  font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2  focus:outline focus:border-purple-700 ${
-                    darkMode
-                      ? "bg-[#302E30] text-white"
-                      : "bg-gray-100 text-black"
-                  }`}
-                  type="tel"
-                  placeholder="Enter your phone"
-                />
                 <Textfield
                   name="email"
                   className={`w-full px-5 py-3 rounded-lg  font-medium border-2 border-transparent placeholder-gray-500 text-sm focus:outline-none focus:border-2  focus:outline focus:border-purple-700 ${
