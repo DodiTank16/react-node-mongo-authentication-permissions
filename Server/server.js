@@ -6,7 +6,7 @@ const port = process.env.PORT || 8083;
 try {
   database
     .sync({
-      alter: true,
+      // alter: true,
       logging: (log) => console.log(log),
     })
     .then(() => {

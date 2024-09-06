@@ -19,11 +19,13 @@ const User = database.define(
       type: Sequelize.STRING(100),
       unique: true,
     },
-
+    isVerifiedEmail: {
+      type: Sequelize.BOOLEAN(),
+      defaultValue: false,
+    },
     password: {
       type: Sequelize.STRING(100),
     },
-
     role: {
       type: Sequelize.ENUM("admin", "customer"),
       defaultValue: "customer",

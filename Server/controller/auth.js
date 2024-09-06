@@ -14,10 +14,12 @@ export const login = async (req, res) => {
     ) {
       throw new ApiError(400, "All Fields are required");
     }
-    const existingUser = await User.findOne({ where: { email } });
+    const existingUser = await User.findOne({
+      where: { email, isVerifiedEmail: 1 },
+    });
 
     if (!existingUser) {
-      throw new ApiError(400, "User is Not Registered Please Signup.");
+      throw new ApiError(400, "User is Not Registered or Email not Verified.");
     }
 
     const validPassword = await bcrypt.compare(password, existingUser.password);
@@ -63,10 +65,37 @@ export const login = async (req, res) => {
         new ApiResponse(
           error.statusCode || 500,
           null,
+          error.message || "Something went wrong, please try again later."
+        )
+      );
+  }
+};
+
+export const logout = async (req, res) => {
+  try {
+    const options = {
+      httpOnly: true,
+      secure: true,
+    };
+
+    res
+      .status(200)
+      .clearCookie("token", options)
+      .json(new ApiResponse(200, {}, "Logout success"));
+  } catch (error) {
+    console.error(error);
+
+    // send error response to the client
+    res
+      .status(error.statusCode || 500)
+      .json(
+        new ApiResponse(
+          error.statusCode || 500,
+          null,
           error.message || "Login With Email Error"
         )
       );
   }
 };
 
-export default { login };
+export default { login, logout };
